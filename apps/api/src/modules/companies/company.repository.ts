@@ -38,4 +38,10 @@ export class CompanyRepository {
   async delete(id: string) {
     return CompanyModel.findByIdAndDelete(id);
   }
+
+  async findByWebsite(website: string) {
+    return CompanyModel.findOne({
+      website,
+    });
+  }
 }

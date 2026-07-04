@@ -3,7 +3,11 @@ import { z } from "zod";
 export const CreateJobSchema = z.object({
   title: z.string().min(3),
 
-  company: z.string(),
+  // company: z.string(),
+
+  companyName: z.string().min(2),
+
+  companyWebsite: z.string().optional(),
 
   applyUrl: z.string().url(),
 
@@ -33,15 +37,15 @@ export const CreateJobSchema = z.object({
 
   source: z.string().optional(),
 
+  sourcePlatform: z.string().optional(),
+
+  sourceUrl: z.string().url().optional(),
+
   sourceJobId: z.string().optional(),
 
   isFeatured: z.boolean().optional(),
 
   expiresAt: z.coerce.date().optional(),
-
-  sourcePlatform: z.string().optional(),
-
-  sourceUrl: z.string().url().optional(),
 });
 
 export const SearchJobSchema = z.object({

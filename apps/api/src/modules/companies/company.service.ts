@@ -31,9 +31,7 @@ export class CompanyService {
   async findAll() {
     const companies = await this.repository.findAll();
 
-    return companies.map((company) =>
-      CompanyMapper.toDto(company)
-    );
+    return companies.map((company) => CompanyMapper.toDto(company));
   }
 
   async findById(id: string) {
@@ -44,5 +42,25 @@ export class CompanyService {
     }
 
     return CompanyMapper.toDto(company);
+  }
+
+  async findOrCreate(name: string, website?: string) {
+    let company = await this.repository.findByName(name);
+
+    if (!company && website) {
+      company = await this.repository.findByWebsite(website);
+    }
+
+    if (company) {
+      return company;
+    }
+
+    const slug = createSlug(name);
+
+    return this.repository.create({
+      name,
+      slug,
+      website: website ?? "",
+    });
   }
 }

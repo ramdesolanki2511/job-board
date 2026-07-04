@@ -7,20 +7,21 @@ import { JobRepository } from "./job.repository";
 import { JobMapper } from "./job.mapper";
 import { CreateJobDto, ImportJobDto, SearchJobDto } from "./job.validation";
 import { generateJobHash } from "../../shared/utils/hash";
+import { CompanyService } from "../companies/company.service";
 
 export class JobService {
   private repository = new JobRepository();
+  private companyService = new CompanyService();
 
   async create(data: CreateJobDto) {
-    const company = await CompanyModel.findById(data.company);
-
-    if (!company) {
-      throw new AppError(404, "Company not found");
-    }
+    const company = await this.companyService.findOrCreate(
+      data.companyName,
+      data.companyWebsite,
+    );
 
     const slug = createSlug(data.title);
 
-    const hash = generateJobHash(data.title, data.company, data.applyUrl);
+    const hash = generateJobHash(data.title, company.id, data.applyUrl);
 
     const duplicate = await this.repository.findByHash(hash);
 
@@ -28,9 +29,13 @@ export class JobService {
       throw new AppError(409, "Duplicate job");
     }
 
+    const { companyName, companyWebsite, ...jobData } = data;
+
     const job = await this.repository.create({
-      ...data,
+      ...jobData,
+      company: company.id,
       slug,
+      jobHash: hash,
     });
 
     return JobMapper.toDto(job);
