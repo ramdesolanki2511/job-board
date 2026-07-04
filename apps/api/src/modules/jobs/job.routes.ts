@@ -10,6 +10,8 @@ const controller = new JobController();
 
 router.post("/", authenticate, asyncHandler(controller.create));
 
+router.post("/import", authenticate, asyncHandler(controller.importJobs));
+
 router.get("/", authenticate, asyncHandler(controller.findAll));
 
 router.get("/search", authenticate, asyncHandler(controller.search));

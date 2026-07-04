@@ -118,4 +118,16 @@ export class JobRepository {
       })
       .limit(limit);
   }
+
+  async findByHash(hash: string) {
+    return JobModel.findOne({
+      jobHash: hash,
+    });
+  }
+
+  async createMany(jobs: any[]) {
+    return JobModel.insertMany(jobs, {
+      ordered: false,
+    });
+  }
 }

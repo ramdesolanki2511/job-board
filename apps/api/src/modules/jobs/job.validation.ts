@@ -38,6 +38,10 @@ export const CreateJobSchema = z.object({
   isFeatured: z.boolean().optional(),
 
   expiresAt: z.coerce.date().optional(),
+
+  sourcePlatform: z.string().optional(),
+
+  sourceUrl: z.string().url().optional(),
 });
 
 export const SearchJobSchema = z.object({
@@ -56,5 +60,10 @@ export const SearchJobSchema = z.object({
   limit: z.coerce.number().default(10),
 });
 
+export const ImportJobSchema = z.object({
+  jobs: z.array(CreateJobSchema),
+});
+
 export type CreateJobDto = z.infer<typeof CreateJobSchema>;
 export type SearchJobDto = z.infer<typeof SearchJobSchema>;
+export type ImportJobDto = z.infer<typeof ImportJobSchema>;

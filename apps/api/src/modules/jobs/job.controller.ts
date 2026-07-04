@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { JobService } from "./job.service";
-import { CreateJobSchema, SearchJobSchema } from "./job.validation";
+import { CreateJobSchema, ImportJobSchema, SearchJobSchema } from "./job.validation";
 
 const jobService = new JobService();
 
@@ -77,6 +77,18 @@ export class JobController {
       success: true,
       message: "Latest jobs",
       data: jobs,
+    });
+  };
+
+  importJobs = async (req: Request, res: Response) => {
+    const payload = ImportJobSchema.parse(req.body);
+
+    const result = await jobService.importJobs(payload);
+
+    return res.status(201).json({
+      success: true,
+      message: "Jobs imported successfully",
+      data: result,
     });
   };
 }

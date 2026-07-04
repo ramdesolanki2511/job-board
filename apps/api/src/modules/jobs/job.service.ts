@@ -5,7 +5,8 @@ import CompanyModel from "../companies/company.model";
 
 import { JobRepository } from "./job.repository";
 import { JobMapper } from "./job.mapper";
-import { CreateJobDto, SearchJobDto } from "./job.validation";
+import { CreateJobDto, ImportJobDto, SearchJobDto } from "./job.validation";
+import { generateJobHash } from "../../shared/utils/hash";
 
 export class JobService {
   private repository = new JobRepository();
@@ -19,10 +20,12 @@ export class JobService {
 
     const slug = createSlug(data.title);
 
-    const exists = await this.repository.findBySlug(slug);
+    const hash = generateJobHash(data.title, data.company, data.applyUrl);
 
-    if (exists) {
-      throw new AppError(409, "Job already exists");
+    const duplicate = await this.repository.findByHash(hash);
+
+    if (duplicate) {
+      throw new AppError(409, "Duplicate job");
     }
 
     const job = await this.repository.create({
@@ -85,5 +88,31 @@ export class JobService {
     const jobs = await this.repository.latest();
 
     return jobs.map(JobMapper.toDto);
+  }
+
+  async importJobs(data: ImportJobDto) {
+    let imported = 0;
+    let duplicates = 0;
+    let failed = 0;
+
+    for (const item of data.jobs) {
+      try {
+        await this.create(item);
+
+        imported++;
+      } catch (error) {
+        if (error instanceof AppError && error.statusCode === 409) {
+          duplicates++;
+        } else {
+          failed++;
+        }
+      }
+    }
+
+    return {
+      imported,
+      duplicates,
+      failed,
+    };
   }
 }

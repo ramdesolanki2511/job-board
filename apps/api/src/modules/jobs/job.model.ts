@@ -44,25 +44,13 @@ const JobSchema = new Schema(
 
     employmentType: {
       type: String,
-      enum: [
-        "Full Time",
-        "Part Time",
-        "Contract",
-        "Internship",
-        "Freelance",
-      ],
+      enum: ["Full Time", "Part Time", "Contract", "Internship", "Freelance"],
       default: "Full Time",
     },
 
     experienceLevel: {
       type: String,
-      enum: [
-        "Fresher",
-        "Junior",
-        "Mid",
-        "Senior",
-        "Lead",
-      ],
+      enum: ["Fresher", "Junior", "Mid", "Senior", "Lead"],
       default: "Mid",
     },
 
@@ -121,10 +109,30 @@ const JobSchema = new Schema(
       type: Date,
       default: null,
     },
+
+    sourcePlatform: {
+      type: String,
+      default: "manual",
+    },
+
+    sourceUrl: {
+      type: String,
+      default: "",
+    },
+
+    jobHash: {
+      type: String,
+      unique: true,
+    },
+
+    scrapedAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 JobSchema.index({
@@ -141,6 +149,10 @@ JobSchema.index({
 
 JobSchema.index({
   publishedAt: -1,
+});
+
+JobSchema.index({
+  jobHash: 1,
 });
 
 export type Job = InferSchemaType<typeof JobSchema>;
