@@ -16,4 +16,11 @@ export class UserRepository {
   async findById(id: string) {
     return userModel.findById(id);
   }
+
+  async updateLastLogin(id: string) {
+    return userModel.findByIdAndUpdate(id, {
+      lastLoginAt: new Date(),
+      lastActiveAt: new Date(),
+    });
+  }
 }

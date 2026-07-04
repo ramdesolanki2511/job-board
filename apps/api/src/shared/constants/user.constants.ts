@@ -1,16 +1,16 @@
 export enum UserRole {
   ADMIN = "admin",
-  USER = "user"
+  USER = "user",
 }
 
 export enum AuthProvider {
   LOCAL = "local",
-  GOOGLE = "google"
+  GOOGLE = "google",
 }
 
 export enum SubscriptionStatus {
   NONE = "none",
   ACTIVE = "active",
   EXPIRED = "expired",
-  CANCELLED = "cancelled"
+  CANCELLED = "cancelled",
 }
