@@ -15,7 +15,10 @@ export class JobRepository {
   }
 
   async findBySlug(slug: string) {
-    return JobModel.findOne({ slug }).populate("company");
+    return JobModel.findOne({
+      slug,
+      isActive: true,
+    }).populate("company");
   }
 
   async update(id: string, data: Partial<CreateJobDto>) {
@@ -91,5 +94,28 @@ export class JobRepository {
       jobs,
       total,
     };
+  }
+
+  async featured(limit = 10) {
+    return JobModel.find({
+      isFeatured: true,
+      isActive: true,
+    })
+      .populate("company")
+      .sort({
+        publishedAt: -1,
+      })
+      .limit(limit);
+  }
+
+  async latest(limit = 20) {
+    return JobModel.find({
+      isActive: true,
+    })
+      .populate("company")
+      .sort({
+        publishedAt: -1,
+      })
+      .limit(limit);
   }
 }

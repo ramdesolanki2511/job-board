@@ -64,4 +64,26 @@ export class JobService {
       totalPages: Math.ceil(result.total / data.limit),
     };
   }
+
+  async findBySlug(slug: string) {
+    const job = await this.repository.findBySlug(slug);
+
+    if (!job) {
+      throw new AppError(404, "Job not found");
+    }
+
+    return JobMapper.toDto(job);
+  }
+
+  async featured() {
+    const jobs = await this.repository.featured();
+
+    return jobs.map(JobMapper.toDto);
+  }
+
+  async latest() {
+    const jobs = await this.repository.latest();
+
+    return jobs.map(JobMapper.toDto);
+  }
 }

@@ -49,4 +49,34 @@ export class JobController {
       data: jobs,
     });
   };
+
+  findBySlug = async (req: Request, res: Response) => {
+    const job = await jobService.findBySlug(req.params.slug);
+
+    return res.json({
+      success: true,
+      message: "Job fetched successfully",
+      data: job,
+    });
+  };
+
+  featured = async (req: Request, res: Response) => {
+    const jobs = await jobService.featured();
+
+    return res.json({
+      success: true,
+      message: "Featured jobs",
+      data: jobs,
+    });
+  };
+
+  latest = async (req: Request, res: Response) => {
+    const jobs = await jobService.latest();
+
+    return res.json({
+      success: true,
+      message: "Latest jobs",
+      data: jobs,
+    });
+  };
 }

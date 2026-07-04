@@ -14,7 +14,12 @@ router.get("/", authenticate, asyncHandler(controller.findAll));
 
 router.get("/search", authenticate, asyncHandler(controller.search));
 
-router.get("/:id", authenticate, asyncHandler(controller.findById));
+router.get("/featured", authenticate, asyncHandler(controller.featured));
 
+router.get("/latest", authenticate, asyncHandler(controller.latest));
+
+router.get("/slug/:slug", authenticate, asyncHandler(controller.findBySlug));
+
+router.get("/:id", authenticate, asyncHandler(controller.findById));
 
 export default router;
