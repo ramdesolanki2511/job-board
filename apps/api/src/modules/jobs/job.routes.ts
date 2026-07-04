@@ -12,6 +12,9 @@ router.post("/", authenticate, asyncHandler(controller.create));
 
 router.get("/", authenticate, asyncHandler(controller.findAll));
 
+router.get("/search", authenticate, asyncHandler(controller.search));
+
 router.get("/:id", authenticate, asyncHandler(controller.findById));
+
 
 export default router;

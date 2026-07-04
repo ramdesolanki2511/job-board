@@ -5,15 +5,13 @@ import CompanyModel from "../companies/company.model";
 
 import { JobRepository } from "./job.repository";
 import { JobMapper } from "./job.mapper";
-import { CreateJobDto } from "./job.validation";
+import { CreateJobDto, SearchJobDto } from "./job.validation";
 
 export class JobService {
   private repository = new JobRepository();
 
   async create(data: CreateJobDto) {
-    const company = await CompanyModel.findById(
-      data.company
-    );
+    const company = await CompanyModel.findById(data.company);
 
     if (!company) {
       throw new AppError(404, "Company not found");
@@ -21,14 +19,10 @@ export class JobService {
 
     const slug = createSlug(data.title);
 
-    const exists =
-      await this.repository.findBySlug(slug);
+    const exists = await this.repository.findBySlug(slug);
 
     if (exists) {
-      throw new AppError(
-        409,
-        "Job already exists"
-      );
+      throw new AppError(409, "Job already exists");
     }
 
     const job = await this.repository.create({
@@ -40,23 +34,34 @@ export class JobService {
   }
 
   async findAll() {
-    const jobs =
-      await this.repository.findAll();
+    const jobs = await this.repository.findAll();
 
     return jobs.map(JobMapper.toDto);
   }
 
   async findById(id: string) {
-    const job =
-      await this.repository.findById(id);
+    const job = await this.repository.findById(id);
 
     if (!job) {
-      throw new AppError(
-        404,
-        "Job not found"
-      );
+      throw new AppError(404, "Job not found");
     }
 
     return JobMapper.toDto(job);
+  }
+
+  async search(data: SearchJobDto) {
+    const result = await this.repository.search(data);
+
+    return {
+      jobs: result.jobs.map(JobMapper.toDto),
+
+      total: result.total,
+
+      page: data.page,
+
+      limit: data.limit,
+
+      totalPages: Math.ceil(result.total / data.limit),
+    };
   }
 }

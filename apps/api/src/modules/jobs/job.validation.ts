@@ -13,28 +13,14 @@ export const CreateJobSchema = z.object({
 
   location: z.string().optional(),
 
-  remoteType: z
-    .enum(["Remote", "Hybrid", "Onsite"])
-    .optional(),
+  remoteType: z.enum(["Remote", "Hybrid", "Onsite"]).optional(),
 
   employmentType: z
-    .enum([
-      "Full Time",
-      "Part Time",
-      "Contract",
-      "Internship",
-      "Freelance",
-    ])
+    .enum(["Full Time", "Part Time", "Contract", "Internship", "Freelance"])
     .optional(),
 
   experienceLevel: z
-    .enum([
-      "Fresher",
-      "Junior",
-      "Mid",
-      "Senior",
-      "Lead",
-    ])
+    .enum(["Fresher", "Junior", "Mid", "Senior", "Lead"])
     .optional(),
 
   salaryMin: z.number().optional(),
@@ -54,4 +40,21 @@ export const CreateJobSchema = z.object({
   expiresAt: z.coerce.date().optional(),
 });
 
+export const SearchJobSchema = z.object({
+  search: z.string().optional(),
+
+  location: z.string().optional(),
+
+  remoteType: z.string().optional(),
+
+  employmentType: z.string().optional(),
+
+  experienceLevel: z.string().optional(),
+
+  page: z.coerce.number().default(1),
+
+  limit: z.coerce.number().default(10),
+});
+
 export type CreateJobDto = z.infer<typeof CreateJobSchema>;
+export type SearchJobDto = z.infer<typeof SearchJobSchema>;
