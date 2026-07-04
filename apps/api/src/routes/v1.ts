@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authRoutes from "../modules/auth/auth.routes";
 import companyRoutes from "../modules/companies/company.routes";
+import jobRoutes from "../modules/jobs/job.routes";
 
 const router = Router();
 
@@ -14,5 +15,7 @@ router.get("/", (_, res) => {
 router.use("/auth", authRoutes);
 
 router.use("/companies", companyRoutes);
+
+router.use("/jobs", jobRoutes);
 
 export default router;
