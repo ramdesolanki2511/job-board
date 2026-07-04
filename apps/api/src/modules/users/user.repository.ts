@@ -1,4 +1,3 @@
-
 import userModel from "./user.model";
 import { CreateUserDto } from "./user.types";
 
@@ -18,9 +17,15 @@ export class UserRepository {
   }
 
   async updateLastLogin(id: string) {
-    return userModel.findByIdAndUpdate(id, {
-      lastLoginAt: new Date(),
-      lastActiveAt: new Date(),
-    });
+    return userModel.findByIdAndUpdate(
+      id,
+      {
+        lastLoginAt: new Date(),
+        lastActiveAt: new Date(),
+      },
+      {
+        new: true,
+      },
+    );
   }
 }

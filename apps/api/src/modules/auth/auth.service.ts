@@ -56,6 +56,8 @@ export class AuthService {
       throw new AppError(401, "Invalid email or password");
     }
 
+    await this.userRepository.updateLastLogin(user.id);
+
     const accessToken = generateAccessToken({
       id: user.id,
       role: user.role,
