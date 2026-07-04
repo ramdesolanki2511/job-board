@@ -1,12 +1,12 @@
-import mongoose, { Schema, InferSchemaType } from "mongoose";
+import mongoose, { InferSchemaType, Schema } from "mongoose";
 
 const CompanySchema = new Schema(
   {
     name: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
+      unique: true,
     },
 
     slug: {
@@ -14,27 +14,58 @@ const CompanySchema = new Schema(
       required: true,
       unique: true,
       lowercase: true,
+      trim: true,
     },
 
-    website: String,
+    website: {
+      type: String,
+      default: "",
+    },
 
-    careersUrl: String,
+    careersUrl: {
+      type: String,
+      default: "",
+    },
 
-    logo: String,
+    logo: {
+      type: String,
+      default: "",
+    },
 
-    description: String,
+    description: {
+      type: String,
+      default: "",
+    },
 
-    industry: String,
+    industry: {
+      type: String,
+      default: "",
+    },
 
-    size: String,
+    size: {
+      type: String,
+      default: "",
+    },
 
-    headquarters: String,
+    headquarters: {
+      type: String,
+      default: "",
+    },
 
-    foundedYear: Number,
+    foundedYear: {
+      type: Number,
+      default: null,
+    },
 
-    linkedinUrl: String,
+    linkedinUrl: {
+      type: String,
+      default: "",
+    },
 
-    twitterUrl: String,
+    twitterUrl: {
+      type: String,
+      default: "",
+    },
 
     isVerified: {
       type: Boolean,
@@ -48,15 +79,15 @@ const CompanySchema = new Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 CompanySchema.index({
-  slug: 1,
+  name: 1,
 });
 
 CompanySchema.index({
-  name: 1,
+  slug: 1,
 });
 
 export type Company = InferSchemaType<typeof CompanySchema>;
