@@ -42,10 +42,9 @@ export class CompanyController {
     req: Request,
     res: Response
   ) => {
+    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
     const company =
-      await companyService.findById(
-        req.params.id
-      );
+      await companyService.findById(id);
 
     return res.json({
       success: true,

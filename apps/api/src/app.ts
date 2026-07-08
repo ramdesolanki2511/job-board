@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
@@ -27,7 +27,7 @@ app.use(
   }),
 );
 
-app.get("/", (_, res) => {
+app.get("/", (_req: Request, res: Response) => {
   res.json({
     success: true,
     message: "RemoteLaunch API Running 🚀",
@@ -36,12 +36,12 @@ app.get("/", (_, res) => {
 
 app.use("/api/v1", v1Routes);
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   req.headers["x-request-id"] = uuid();
   next();
 });
 
-app.get("/health", (_, res) => {
+app.get("/health", (_req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     uptime: process.uptime(),

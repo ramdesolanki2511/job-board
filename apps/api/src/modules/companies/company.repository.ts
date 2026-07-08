@@ -3,7 +3,7 @@ import CompanyModel from "./company.model";
 import { CreateCompanyDto } from "./company.validation";
 
 export class CompanyRepository {
-  async create(data: CreateCompanyDto) {
+  async create(data: any) {
     return CompanyModel.create(data);
   }
 

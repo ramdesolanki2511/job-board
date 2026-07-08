@@ -5,7 +5,7 @@ import CompanyModel from "../companies/company.model";
 
 import { JobRepository } from "./job.repository";
 import { JobMapper } from "./job.mapper";
-import { CreateJobDto, ImportJobDto, SearchJobDto } from "./job.validation";
+import { CreateJobDto, ImportJobDto, JobListDto, SearchJobDto } from "./job.validation";
 import { generateJobHash } from "../../shared/utils/hash";
 import { CompanyService } from "../companies/company.service";
 
@@ -33,10 +33,10 @@ export class JobService {
 
     const job = await this.repository.create({
       ...jobData,
-      company: company.id,
+      company: company.id as never,
       slug,
       jobHash: hash,
-    });
+    } as any);
 
     return JobMapper.toDto(job);
   }

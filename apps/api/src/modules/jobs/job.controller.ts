@@ -36,7 +36,8 @@ export class JobController {
   };
 
   findById = async (req: Request, res: Response) => {
-    const job = await jobService.findById(req.params.id);
+    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    const job = await jobService.findById(id);
 
     return res.json({
       success: true,
@@ -58,7 +59,8 @@ export class JobController {
   };
 
   findBySlug = async (req: Request, res: Response) => {
-    const job = await jobService.findBySlug(req.params.slug);
+    const slug = Array.isArray(req.params.slug) ? req.params.slug[0] : req.params.slug;
+    const job = await jobService.findBySlug(slug);
 
     return res.json({
       success: true,

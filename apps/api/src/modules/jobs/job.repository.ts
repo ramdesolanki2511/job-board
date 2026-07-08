@@ -1,8 +1,8 @@
 import JobModel from "./job.model";
-import { CreateJobDto } from "./job.validation";
+import { CreateJobDto, JobListDto } from "./job.validation";
 
 export class JobRepository {
-  async create(data: CreateJobDto & { slug: string }) {
+  async create(data: any) {
     return JobModel.create(data);
   }
 
@@ -39,7 +39,9 @@ export class JobRepository {
     }
 
     const sort =
-      filters.sort === "oldest" ? { publishedAt: 1 } : { publishedAt: -1 };
+      filters.sort === "oldest"
+        ? ({ publishedAt: 1 } as const)
+        : ({ publishedAt: -1 } as const);
 
     const skip = (filters.page - 1) * filters.limit;
 

@@ -118,7 +118,7 @@ UserSchema.index({ role: 1 });
 UserSchema.index({ subscriptionStatus: 1 });
 
 UserSchema.set("toJSON", {
-  transform(_, ret) {
+  transform(_, ret: Record<string, unknown>) {
     delete ret.password;
     delete ret.__v;
     return ret;

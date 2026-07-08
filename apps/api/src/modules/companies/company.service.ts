@@ -59,8 +59,19 @@ export class CompanyService {
 
     return this.repository.create({
       name,
-      slug,
       website: website ?? "",
-    });
+      slug,
+      careersUrl: "",
+      logo: "",
+      description: "",
+      industry: "",
+      size: "",
+      headquarters: "",
+      foundedYear: null,
+      linkedinUrl: "",
+      twitterUrl: "",
+      isVerified: false,
+      isActive: true,
+    } as any);
   }
 }

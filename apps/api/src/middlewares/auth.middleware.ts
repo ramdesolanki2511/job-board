@@ -19,7 +19,7 @@ export function authenticate(
   res: Response,
   next: NextFunction,
 ) {
-  const authHeader = req.headers.authorization;
+  const authHeader = req.get("authorization");
 
   if (!authHeader) {
     throw new AppError(401, "Authentication required");
