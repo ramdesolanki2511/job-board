@@ -3,6 +3,7 @@ import authRoutes from "../modules/auth/auth.routes";
 import companyRoutes from "../modules/companies/company.routes";
 import jobRoutes from "../modules/jobs/job.routes";
 import savedJobRoutes from "../modules/saved-jobs/saved-job.routes";
+import subscriptionRoutes from "../modules/subscriptions/subscription.routes";
 
 const router = Router();
 
@@ -20,5 +21,7 @@ router.use("/companies", companyRoutes);
 router.use("/jobs", jobRoutes);
 
 router.use("/saved-jobs", savedJobRoutes);
+
+router.use("/subscriptions", subscriptionRoutes);
 
 export default router;

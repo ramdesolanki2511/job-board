@@ -1,0 +1,346 @@
+.planSelector {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.header p {
+  margin: 0;
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.frequencyToggle {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.frequencyButton {
+  padding: 12px 24px;
+  background-color: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.frequencyButton:hover {
+  border-color: #d1d5db;
+  background-color: #f9fafb;
+}
+
+.frequencyButton.active {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  background-color: #dcfce7;
+  color: #166534;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.frequencyButton.active .badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.plansGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.planCard {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.planCard:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.planCard.featured {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  transform: scale(1.02);
+}
+
+.planCard.selected {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.popularBadge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.planHeader {
+  margin-bottom: 20px;
+}
+
+.planHeader h3 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.description {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.price {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.period {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.selectButton {
+  padding: 14px 24px;
+  background-color: white;
+  border: 2px solid #3b82f6;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #3b82f6;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 20px;
+}
+
+.selectButton:hover:not(:disabled) {
+  background-color: #eff6ff;
+}
+
+.selectButton.selectedButton {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.selectButton.selectedButton:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.selectButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.features {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.features h4 {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.features li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.checkmark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: #dcfce7;
+  color: #166534;
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.highlight {
+  padding: 12px;
+  background-color: #f3f4f6;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.featureBadge {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #dbeafe;
+  color: #0c4a6e;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 4px 4px 4px 0;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.errorContainer {
+  padding: 20px;
+  background-color: #fee2e2;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  color: #991b1b;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .planCard.featured {
+    transform: scale(1);
+  }
+
+  .plansGrid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .planSelector {
+    padding: 24px 12px;
+    gap: 24px;
+  }
+
+  .header h2 {
+    font-size: 24px;
+  }
+
+  .plansGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .planCard {
+    padding: 24px;
+  }
+
+  .price {
+    font-size: 28px;
+  }
+
+  .frequencyToggle {
+    flex-direction: column;
+  }
+
+  .frequencyButton {
+    width: 100%;
+  }
+}
