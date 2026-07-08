@@ -5,8 +5,8 @@ export const env = cleanEnv(process.env, {
   PORT: port(),
   API_PREFIX: str(),
   MONGODB_URI: str(),
-  REDIS_HOST: str(),
-  REDIS_PORT: port(),
+  REDIS_HOST: str({ default: "127.0.0.1" }),
+  REDIS_PORT: port({ default: 6379 }),
   JWT_ACCESS_SECRET: str(),
   JWT_REFRESH_SECRET: str(),
   LOG_LEVEL: str()

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { AuthProvider } from "./auth/auth-context";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -11,9 +12,35 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://remote-launch.example.com";
+
 export const metadata: Metadata = {
   title: "RemoteLaunch - Remote Jobs Aggregator",
   description: "Find your next remote job opportunity",
+  metadataBase: new URL(siteUrl),
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: "RemoteLaunch - Remote Jobs Aggregator",
+    description: "Find your next remote job opportunity",
+    url: siteUrl,
+    siteName: 'RemoteLaunch',
+    images: [
+      {
+        url: `${siteUrl}/og-image.svg`,
+        width: 1200,
+        height: 630,
+        alt: 'RemoteLaunch',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'RemoteLaunch - Remote Jobs Aggregator',
+    description: 'Find your next remote job opportunity',
+    images: [`${siteUrl}/og-image.svg`],
+  },
 };
 
 export default function RootLayout({
@@ -24,27 +51,44 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <nav style={styles.nav}>
-          <div style={styles.navContainer}>
-            <a href="/" style={styles.logo}>
-              RemoteLaunch
-            </a>
-            <div style={styles.navLinks}>
-              <a href="/jobs" style={styles.navLink}>
-                Browse Jobs
+        {/* Structured data for organization */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "RemoteLaunch",
+              url: siteUrl,
+              logo: `${siteUrl}/logo.svg`,
+              sameAs: [
+                "https://twitter.com/remote_launch",
+              ],
+            }),
+          }}
+        />
+        <AuthProvider>
+          <nav style={styles.nav}>
+            <div style={styles.navContainer}>
+              <a href="/" style={styles.logo}>
+                RemoteLaunch
               </a>
-              <a href="/companies" style={styles.navLink}>
-                Companies
-              </a>
+              <div style={styles.navLinks}>
+                <a href="/jobs" style={styles.navLink}>
+                  Browse Jobs
+                </a>
+                <a href="/companies" style={styles.navLink}>
+                  Companies
+                </a>
+              </div>
             </div>
-          </div>
-        </nav>
-        {children}
-        <footer style={styles.footer}>
-          <div style={styles.footerContainer}>
-            <p>&copy; 2026 RemoteLaunch. All rights reserved.</p>
-          </div>
-        </footer>
+          </nav>
+          {children}
+          <footer style={styles.footer}>
+            <div style={styles.footerContainer}>
+              <p>&copy; 2026 RemoteLaunch. All rights reserved.</p>
+            </div>
+          </footer>
+        </AuthProvider>
       </body>
     </html>
   );

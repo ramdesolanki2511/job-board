@@ -3,7 +3,7 @@ import "dotenv/config";
 import app from "./app";
 
 import { env } from "./config/env";
-import { logger } from "./config/logger";
+import logger from "./config/logger";
 import { connectDatabase } from "./config/database";
 
 async function startServer() {

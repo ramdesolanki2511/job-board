@@ -2,6 +2,7 @@
   "name": "job-board",
   "private": true,
   "scripts": {
+    "backup:mongo": "bash ./scripts/backup-mongo.sh ./backups",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
