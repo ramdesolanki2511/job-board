@@ -6,8 +6,57 @@ export class JobRepository {
     return JobModel.create(data);
   }
 
-  async findAll() {
-    return JobModel.find().populate("company").sort({ publishedAt: -1 });
+  async findAll(filters: JobListDto) {
+    const query: any = {
+      isActive: true,
+    };
+
+    if (filters.search) {
+      query.title = {
+        $regex: filters.search,
+        $options: "i",
+      };
+    }
+
+    if (filters.company) {
+      query.company = filters.company;
+    }
+
+    if (filters.remoteType) {
+      query.remoteType = filters.remoteType;
+    }
+
+    if (filters.employmentType) {
+      query.employmentType = filters.employmentType;
+    }
+
+    if (filters.experienceLevel) {
+      query.experienceLevel = filters.experienceLevel;
+    }
+
+    if (filters.featured !== undefined) {
+      query.isFeatured = filters.featured;
+    }
+
+    const sort =
+      filters.sort === "oldest" ? { publishedAt: 1 } : { publishedAt: -1 };
+
+    const skip = (filters.page - 1) * filters.limit;
+
+    const [jobs, total] = await Promise.all([
+      JobModel.find(query)
+        .populate("company")
+        .sort(sort)
+        .skip(skip)
+        .limit(filters.limit),
+
+      JobModel.countDocuments(query),
+    ]);
+
+    return {
+      jobs,
+      total,
+    };
   }
 
   async findById(id: string) {

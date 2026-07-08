@@ -68,6 +68,27 @@ export const ImportJobSchema = z.object({
   jobs: z.array(CreateJobSchema),
 });
 
+export const JobListSchema = z.object({
+  page: z.coerce.number().default(1),
+
+  limit: z.coerce.number().default(20),
+
+  search: z.string().optional(),
+
+  company: z.string().optional(),
+
+  remoteType: z.string().optional(),
+
+  employmentType: z.string().optional(),
+
+  experienceLevel: z.string().optional(),
+
+  featured: z.coerce.boolean().optional(),
+
+  sort: z.enum(["latest", "oldest"]).default("latest"),
+});
+
 export type CreateJobDto = z.infer<typeof CreateJobSchema>;
 export type SearchJobDto = z.infer<typeof SearchJobSchema>;
 export type ImportJobDto = z.infer<typeof ImportJobSchema>;
+export type JobListDto = z.infer<typeof JobListSchema>;

@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 
 import { JobService } from "./job.service";
-import { CreateJobSchema, ImportJobSchema, SearchJobSchema } from "./job.validation";
+import {
+  CreateJobSchema,
+  ImportJobSchema,
+  JobListSchema,
+  SearchJobSchema,
+} from "./job.validation";
 
 const jobService = new JobService();
 
@@ -19,7 +24,9 @@ export class JobController {
   };
 
   findAll = async (req: Request, res: Response) => {
-    const jobs = await jobService.findAll();
+    const query = JobListSchema.parse(req.query);
+
+    const jobs = await jobService.findAll(query);
 
     return res.json({
       success: true,
@@ -81,6 +88,8 @@ export class JobController {
   };
 
   importJobs = async (req: Request, res: Response) => {
+    console.log(JSON.stringify(req.body, null, 2));
+
     const payload = ImportJobSchema.parse(req.body);
 
     const result = await jobService.importJobs(payload);

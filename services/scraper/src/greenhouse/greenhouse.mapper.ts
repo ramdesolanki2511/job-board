@@ -1,13 +1,16 @@
 import { GreenhouseJob } from "./greenhouse.types";
 
+import { CompanyConfig } from "../config/companies";
+import { ImportJobPayload } from "../shared/normalizer";
+
 export class GreenhouseMapper {
-  static toImportJob(job: GreenhouseJob) {
+  static toImportJob(company: CompanyConfig, job: GreenhouseJob): ImportJobPayload {
     return {
       title: job.title,
 
-      companyName: "Stripe",
+      companyName: company.companyName,
 
-      companyWebsite: "https://stripe.com",
+      companyWebsite: company.companyWebsite,
 
       applyUrl: job.absolute_url,
 
@@ -21,7 +24,6 @@ export class GreenhouseMapper {
 
       sourceUrl: job.absolute_url,
 
-      // sourceJobId: job.id.toString(),
       sourceJobId: String(job.id ?? ""),
 
       skills: [],

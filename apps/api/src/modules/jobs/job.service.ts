@@ -41,10 +41,20 @@ export class JobService {
     return JobMapper.toDto(job);
   }
 
-  async findAll() {
-    const jobs = await this.repository.findAll();
+  async findAll(filters: JobListDto) {
+    const result = await this.repository.findAll(filters);
 
-    return jobs.map(JobMapper.toDto);
+    return {
+      jobs: result.jobs.map(JobMapper.toDto),
+
+      total: result.total,
+
+      page: filters.page,
+
+      limit: filters.limit,
+
+      totalPages: Math.ceil(result.total / filters.limit),
+    };
   }
 
   async findById(id: string) {
@@ -101,6 +111,7 @@ export class JobService {
     let failed = 0;
 
     for (const item of data.jobs) {
+      console.log(item);
       try {
         await this.create(item);
 
@@ -118,6 +129,7 @@ export class JobService {
       imported,
       duplicates,
       failed,
+      hasNewJobs: imported > 0,
     };
   }
 }
